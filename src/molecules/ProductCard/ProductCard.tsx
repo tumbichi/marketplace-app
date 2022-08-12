@@ -13,7 +13,6 @@ const ProductCard: FC<ProductCardProps> = (props) => {
   return (
     <Box
       maxW="sm"
-      //   maxH={300}
       borderWidth="1px"
       borderRadius="lg"
       overflow="hidden"
