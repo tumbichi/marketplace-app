@@ -1,4 +1,4 @@
-import { Box, Flex, Tag, TagCloseButton, TagLabel } from "@chakra-ui/react";
+import { Box, Flex, Heading, Tag, TagCloseButton, TagLabel } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
@@ -32,7 +32,7 @@ const Home: NextPage = () => {
           borderRadius="lg"
           direction={"column"}
         >
-          {/* <Heading size="md">Filters</Heading> */}
+          <Heading size="md">Filters</Heading>
           <Flex gap={2}>
             {filters.map((filter) => (
               <Tag
