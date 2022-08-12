@@ -41,7 +41,6 @@ const CreateProduct = () => {
   const { onClick, onChange, onKeyDown, format, toNumber } = useCurrency({
     style: "decimal",
   });
-  // toNumber(price); when save
   const [title, setTitle] = useState({ value: "", error: null });
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState<string>(format("000"));
@@ -82,16 +81,13 @@ const CreateProduct = () => {
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // if (e.target.files === null) return;
     const file: File | null = e.target.files && e.target.files[0];
     let reader = new FileReader();
     if (file && file.type.match("image.*")) {
       reader.readAsDataURL(file);
     }
     reader.onload = () => {
-      // if (e.target.files === null) return;
       setImage({ file: file, result: reader.result });
-      // Make a fileInfo Object
     };
   };
 
