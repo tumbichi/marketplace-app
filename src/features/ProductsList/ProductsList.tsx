@@ -24,7 +24,7 @@ const ProductsList: FC<ProductListProps> = ({ isAdmin }) => {
           status: "success",
           isClosable: true,
         });
-        axios.get("http://localhost:8080/products").then(({ data }) => {
+        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/products`).then(({ data }) => {
           setProducts(data);
         });
       })
@@ -39,7 +39,7 @@ const ProductsList: FC<ProductListProps> = ({ isAdmin }) => {
   };
 
   useEffect(() => {
-    axios.get("http://localhost:8080/products").then(({ data }) => {
+    axios.get(`${process.env.NEXT_PUBLIC_API_URL}/products`).then(({ data }) => {
       setProducts(data);
     });
   }, []);

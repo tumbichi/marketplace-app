@@ -33,7 +33,7 @@ const CreateProduct = () => {
     }
 
     axios
-      .post("http://localhost:8080/categories", {
+      .post(`${process.env.NEXT_PUBLIC_API_URL}/categories`, {
         title: title.value,
       })
       .then(({ data }) => {

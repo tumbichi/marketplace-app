@@ -64,11 +64,7 @@ const CreateProduct = () => {
   };
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log("e target.value :>> ", e.target.value);
     const selected = categories.find((cat) => {
-      // console.log("c :>> ", c);
-      // console.log("e.target.value", Number(e.target.value));
-      // console.log("e.target.value", typeof Number(e.target.value));
       return cat.value === Number(e.target.value);
     });
     setCategory(selected);
@@ -151,7 +147,7 @@ const CreateProduct = () => {
 
   useEffect(() => {
     axios
-      .get<Category[]>("http://localhost:8080/categories")
+      .get<Category[]>(`${process.env.NEXT_PUBLIC_API_URL}/categories`)
       .then(({ data }) => {
         const categoriesPar = data.map(({ id, title }) => ({
           value: id,

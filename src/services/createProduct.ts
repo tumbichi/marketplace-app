@@ -4,18 +4,15 @@ export const createProductService = async (
   formData: FormData,
   { title, description, price, categoryId, storeId }: any
 ) => {
-  const res = await fetch("http://localhost:8080/image/upload", {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/image/upload`, {
     method: "POST",
     body: formData,
   });
   const data: any = await res.json();
 
   const { id, format, name, publicId, secure_url, url, version } = data;
-  //   .then((res) => res.json())
-  //   .then((data) => console.log("data :>> ", data))
-  //   .catch((e) => console.log("e :>> ", e));
 
-  const response = await axios.post("http://localhost:8080/products", {
+  const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/products`, {
     title,
     description,
     price,
