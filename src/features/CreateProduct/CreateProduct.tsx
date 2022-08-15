@@ -232,7 +232,7 @@ const CreateProduct = () => {
                 <input
                   key={imageKey}
                   onChange={handleImageChange}
-                  accept=".jpg, .png, .gif, .jpeg"
+                  accept=".jpg, .png, .gif, .jpeg, .webp"
                   type="file"
                 />
               </FormControl>
