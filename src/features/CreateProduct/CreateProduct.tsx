@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { useCurrency } from "react-hook-currency";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Box,
   Button,
@@ -10,6 +9,7 @@ import {
   FormLabel,
   Grid,
   Heading,
+  IconButton,
   Image,
   Input,
   InputGroup,
@@ -20,60 +20,64 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Select,
   Skeleton,
   Spinner,
   Text,
   Textarea,
-  useToast,
 } from "@chakra-ui/react";
+import { Select, SingleValue } from "chakra-react-select";
 import axios from "axios";
-import { createProductService } from "../../services/createProduct";
 import { Category } from "../../models/Category";
-
-interface SelectItem<T> {
-  value: T;
-  label: string;
-}
+import SelectItem from "../../models/SelectItem";
+import useCreateProduct from "./hooks/useCreateProduct";
+import { RepeatIcon } from "@chakra-ui/icons";
 
 const CreateProduct = () => {
-  const toast = useToast();
-  const { onClick, onChange, onKeyDown, format, toNumber } = useCurrency({
-    style: "decimal",
-  });
-  const [title, setTitle] = useState({ value: "", error: null });
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState<string>(format("000"));
-  const [category, setCategory] = useState<SelectItem<number> | undefined>();
+  const {
+    state: {
+      loading,
+      productForm: { title, description, price, category, image },
+    },
+    actions: {
+      onChangeFormInput,
+      onChangeImage,
+      handleCreateProduct,
+      resetForm,
+    },
+  } = useCreateProduct();
+
+  /*  console.log("{ title, description, price, category, image }", {
+    title,
+    description,
+    price,
+    category,
+    image,
+  }); */
+
   const [categories, setCategories] = useState<SelectItem<number>[]>([]);
   const [categoriesLoading, setCategoriesLoading] = useState(true);
-  const [image, setImage] = useState<{ file?: any; result?: any }>({
-    file: null,
-    result: null,
-  });
-  const [imageKey, setImageKey] = useState("imageKey");
-  const [loading, setLoading] = useState(false);
-
-  const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(e);
-    setPrice(e.target.value);
-  };
+  const ref = useRef<any>();
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle((prev) => ({ ...prev, value: e.target.value }));
+    onChangeFormInput("title", e.target.value);
   };
 
-  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selected = categories.find((cat) => {
-      return cat.value === Number(e.target.value);
-    });
-    setCategory(selected);
-  };
-
-  const handleChangeDescription = (
+  const handleDescriptionChange = (
     e: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
-    setDescription(e.target.value);
+    onChangeFormInput("description", e.target.value);
+  };
+
+  const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    price.onChange && price.onChange(e);
+    onChangeFormInput("price", e.target.value);
+  };
+
+  const handleCategoryChange = (
+    newValue: SingleValue<SelectItem<number>>
+    // actionMeta: ActionMeta<number>
+  ) => {
+    onChangeFormInput("category", newValue?.value, newValue?.label);
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -83,66 +87,22 @@ const CreateProduct = () => {
       reader.readAsDataURL(file);
     }
     reader.onload = () => {
-      setImage({ file: file, result: reader.result });
+      if (file === null) return;
+      onChangeImage(file, reader.result as string);
     };
+  };
+
+  const handleResetForm = () => {
+    resetForm();
+    ref.current.value = null;
   };
 
   const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (title.value.length < 3) {
-      return toast({
-        title: "The title must be 3 or more characters long",
-        status: "error",
-        isClosable: true,
-      });
-    }
+    handleCreateProduct().then(() => handleResetForm());
 
-    if (!category) {
-      return toast({
-        title: "The category is mandatory",
-        status: "error",
-        isClosable: true,
-      });
-    }
-
-    if (!image.file || !image.result) {
-      return toast({
-        title: "The product image is obligatory",
-        status: "error",
-        isClosable: true,
-      });
-    }
-
-    setLoading(true);
-
-    const formData = new FormData();
-    formData.append("image", image.file);
-
-    createProductService(formData, {
-      title: title.value,
-      description,
-      price: toNumber(price),
-      categoryId: category.value,
-      storeId: 1,
-    })
-      .then((data) => {
-        toast({
-          title: `${data.title} created!`,
-          status: "success",
-          isClosable: true,
-        });
-        setTitle({ value: "", error: null });
-        setDescription("");
-        setPrice(format("000"));
-        setCategory({ value: 0, label: "" });
-        setImage({ file: undefined, result: undefined });
-        setImageKey("");
-      })
-      .catch((e) => {
-        console.log("e :>> ", e);
-      })
-      .finally(() => setLoading(false));
+    // setPrice(format("000"));
   };
 
   useEffect(() => {
@@ -162,7 +122,15 @@ const CreateProduct = () => {
   return (
     <>
       <Box h="calc(100vh - 3rem)" p={6}>
-        <Heading>Create a product</Heading>
+        <Flex gap={4} alignItems="center">
+          <Heading>Create a product</Heading>
+          <IconButton
+            colorScheme="blue"
+            aria-label="reset form"
+            icon={<RepeatIcon />}
+            onClick={handleResetForm}
+          />
+        </Flex>
         <Grid h="100%" templateColumns="repeat(2, 1fr)">
           <form onSubmit={handleSubmit}>
             <Flex gap={8} mt={4} flexDirection="column">
@@ -184,8 +152,8 @@ const CreateProduct = () => {
                 <FormLabel>Description</FormLabel>
                 <Textarea
                   placeholder="Description ex: origin, composition, etc"
-                  value={description}
-                  onChange={handleChangeDescription}
+                  value={description.value}
+                  onChange={handleDescriptionChange}
                 />
               </FormControl>
               <FormControl>
@@ -201,10 +169,10 @@ const CreateProduct = () => {
                   <Input
                     width="auto"
                     placeholder="Price"
-                    value={price}
+                    value={price.value}
                     onChange={handlePriceChange}
-                    onKeyDown={onKeyDown}
-                    onClick={onClick}
+                    onKeyDown={price.onKeyDown}
+                    onClick={price.onClick}
                   />
                 </InputGroup>
               </FormControl>
@@ -214,26 +182,23 @@ const CreateProduct = () => {
                 {categoriesLoading ? (
                   <Skeleton h="40px" />
                 ) : (
-                  <Select
+                  <Select<SelectItem<number>>
                     placeholder="Select category"
-                    value={category?.value}
+                    value={category}
+                    options={categories as any}
                     onChange={handleCategoryChange}
-                  >
-                    {categories.map((category) => (
-                      <option key={category.label} value={category.value}>
-                        {category.label}
-                      </option>
-                    ))}
-                  </Select>
+                    // onChange={handleCategoryChange}
+                  />
                 )}
               </FormControl>
               <FormControl>
                 <FormLabel>Image</FormLabel>
                 <input
-                  key={imageKey}
+                  ref={ref}
                   onChange={handleImageChange}
                   accept=".jpg, .png, .gif, .jpeg"
                   type="file"
+                  src={image?.src}
                 />
               </FormControl>
             </Flex>
@@ -243,9 +208,7 @@ const CreateProduct = () => {
           </form>
           <Flex justifyContent="center">
             <Box>
-              {image.result && (
-                <Image src={image.result} alt="New product image" />
-              )}
+              {image && <Image src={image.src} alt="New product image" />}
             </Box>
           </Flex>
         </Grid>
