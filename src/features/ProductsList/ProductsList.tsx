@@ -3,7 +3,7 @@ import axios from "axios";
 import { Box, Grid, IconButton, Text, useToast } from "@chakra-ui/react";
 import { ProductCard } from "../../molecules";
 import { DeleteIcon } from "@chakra-ui/icons";
-import { deleteProductService } from "../../services/deleteProduct";
+import { deleteProductService } from "../CreateProduct/services/deleteProduct";
 
 interface ProductListProps {
   isAdmin?: boolean;
@@ -24,9 +24,11 @@ const ProductsList: FC<ProductListProps> = ({ isAdmin }) => {
           status: "success",
           isClosable: true,
         });
-        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/products`).then(({ data }) => {
-          setProducts(data);
-        });
+        axios
+          .get(`${process.env.NEXT_PUBLIC_API_URL}/products`)
+          .then(({ data }) => {
+            setProducts(data);
+          });
       })
       .catch(() => {
         toast({
@@ -39,9 +41,11 @@ const ProductsList: FC<ProductListProps> = ({ isAdmin }) => {
   };
 
   useEffect(() => {
-    axios.get(`${process.env.NEXT_PUBLIC_API_URL}/products`).then(({ data }) => {
-      setProducts(data);
-    });
+    axios
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/products`)
+      .then(({ data }) => {
+        setProducts(data);
+      });
   }, []);
 
   return (
