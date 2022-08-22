@@ -14,9 +14,6 @@ export const initialState: CreateProductState = {
     description: { value: "" },
     price: {
       value: "0",
-      // onChange: () => {},
-      // onKeyDown: () => {},
-      // onClick: () => {},
     },
     image: undefined,
     category: null,

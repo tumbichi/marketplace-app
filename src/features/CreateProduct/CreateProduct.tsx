@@ -46,14 +46,6 @@ const CreateProduct = () => {
     },
   } = useCreateProduct();
 
-  /*  console.log("{ title, description, price, category, image }", {
-    title,
-    description,
-    price,
-    category,
-    image,
-  }); */
-
   const [categories, setCategories] = useState<SelectItem<number>[]>([]);
   const [categoriesLoading, setCategoriesLoading] = useState(true);
   const ref = useRef<any>();
@@ -73,10 +65,7 @@ const CreateProduct = () => {
     onChangeFormInput("price", e.target.value);
   };
 
-  const handleCategoryChange = (
-    newValue: SingleValue<SelectItem<number>>
-    // actionMeta: ActionMeta<number>
-  ) => {
+  const handleCategoryChange = (newValue: SingleValue<SelectItem<number>>) => {
     onChangeFormInput("category", newValue?.value, newValue?.label);
   };
 
@@ -101,8 +90,6 @@ const CreateProduct = () => {
     e.preventDefault();
 
     handleCreateProduct().then(() => handleResetForm());
-
-    // setPrice(format("000"));
   };
 
   useEffect(() => {
@@ -187,7 +174,6 @@ const CreateProduct = () => {
                     value={category}
                     options={categories as any}
                     onChange={handleCategoryChange}
-                    // onChange={handleCategoryChange}
                   />
                 )}
               </FormControl>

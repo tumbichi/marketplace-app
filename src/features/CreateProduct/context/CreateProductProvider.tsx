@@ -57,27 +57,33 @@ const CreateProductProvider: FC<PropsWithChildren> = ({ children }) => {
     const { productForm } = state;
 
     if (productForm.title.value.length < 3) {
-      return toast({
-        title: "The title must be 3 or more characters long",
-        status: "error",
-        isClosable: true,
-      });
+      return Promise.reject(() =>
+        toast({
+          title: "The title must be 3 or more characters long",
+          status: "error",
+          isClosable: true,
+        })
+      );
     }
 
     if (!productForm.category) {
-      return toast({
-        title: "The category is mandatory",
-        status: "error",
-        isClosable: true,
-      });
+      return Promise.reject(() =>
+        toast({
+          title: "The category is mandatory",
+          status: "error",
+          isClosable: true,
+        })
+      );
     }
 
     if (!productForm.image) {
-      return toast({
-        title: "The product image is obligatory",
-        status: "error",
-        isClosable: true,
-      });
+      return Promise.reject(() =>
+        toast({
+          title: "The product image is obligatory",
+          status: "error",
+          isClosable: true,
+        })
+      );
     }
 
     const imageFormData = new FormData();
@@ -94,8 +100,6 @@ const CreateProductProvider: FC<PropsWithChildren> = ({ children }) => {
         categoryId: productForm.category.value,
         storeId: 1,
       });
-
-      console.log("productCreated == response.data :>> ", productCreated);
 
       toast({
         title: `${productCreated.title} created!`,
