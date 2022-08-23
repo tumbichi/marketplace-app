@@ -7,14 +7,21 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import React, { FC, PropsWithChildren } from "react";
+import { LayoutProps } from "framer-motion";
+import React, { FC, PropsWithChildren, ReactNode } from "react";
 import { Drawer, Header } from "../../molecules";
 
-const Layout: FC<PropsWithChildren> = ({ children }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+interface LayoutProps {
+  children: {
+    header: ReactNode;
+    content: ReactNode;
+  };
+}
+
+const Layout: FC<LayoutProps> = ({ children }) => {
   return (
     <>
-      <Header darkMode={false} />
+      {children.header}
       <Flex>
         <Box
           h="calc(100vh - 5rem)"
@@ -26,13 +33,9 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
         >
           <Heading size="lg">Filters</Heading>
           <Text as="i">Select the filters you wish</Text>
-          <Button mt={4} bg="brand.500" onClick={onOpen}>
-            Open
-          </Button>
         </Box>
-        <Flex flex={1}>{children}</Flex>
+        <Flex flex={1}>{children.content}</Flex>
       </Flex>
-      <Drawer isOpen={isOpen} onClose={onClose} />
     </>
   );
 };

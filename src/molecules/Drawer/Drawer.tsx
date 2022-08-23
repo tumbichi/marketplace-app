@@ -8,31 +8,49 @@ import {
   DrawerHeader,
   DrawerOverlay,
   Input,
+  SlideDirection,
+  Text,
 } from "@chakra-ui/react";
-import React, { FC } from "react";
+import React, { FC, ReactNode } from "react";
 
 interface DrawerProps {
   isOpen: boolean;
   onClose: () => void;
+  placement?: SlideDirection;
+  children: {
+    title: ReactNode;
+    body: ReactNode;
+    footer?: ReactNode;
+  };
+  size?: string;
 }
 
-const Drawer: FC<DrawerProps> = ({ isOpen, onClose }) => {
+const Drawer: FC<DrawerProps> = ({
+  children,
+  isOpen,
+  onClose,
+  placement = "left",
+  size = "xs",
+}) => {
   return (
-    <ChakraDrawer isOpen={isOpen} placement="right" onClose={onClose}>
+    <ChakraDrawer
+      size={size}
+      isOpen={isOpen}
+      placement={placement}
+      onClose={onClose}
+    >
       <DrawerOverlay />
       <DrawerContent>
         <DrawerCloseButton />
-        <DrawerHeader>Create your account</DrawerHeader>
+        <DrawerHeader>{children.title}</DrawerHeader>
 
-        <DrawerBody>
-          <Input placeholder="Type here..." />
-        </DrawerBody>
+        <DrawerBody>{children.body}</DrawerBody>
 
         <DrawerFooter>
           <Button variant="outline" mr={3} onClick={onClose}>
             Cancel
           </Button>
-          <Button colorScheme="blue">Save</Button>
+          <Button colorScheme="blue">Buy</Button>
         </DrawerFooter>
       </DrawerContent>
     </ChakraDrawer>
