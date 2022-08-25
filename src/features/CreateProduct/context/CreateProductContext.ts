@@ -1,6 +1,5 @@
 import { createContext } from "react";
 import Product from "../../../models/Product";
-import SelectItem from "../../../models/SelectItem";
 import CreateProductState from "../models/CreateProductState";
 
 export type ProductKey = "title" | "description" | "price" | "category";
