@@ -4,7 +4,6 @@ import { Box, Grid, Text, useToast } from "@chakra-ui/react";
 import { ProductCard } from "../../molecules";
 import { deleteProductService } from "../CreateProduct/services/deleteProduct";
 import useShoppingCart from "../ShoppingCart/hooks/useShoppingCart";
-import ProductCreationDTO from "../../models/ProductCreationDTO";
 import Product from "../../models/Product";
 
 interface ProductListProps {
@@ -68,7 +67,6 @@ const ProductsList: FC<ProductListProps> = ({ isAdmin }) => {
           <Text>{"There are not products :("}</Text>
         ) : (
           products.map((product: Product) => {
-            console.log("product:>> ", product);
             return (
               <ProductCard
                 key={product.title}
@@ -78,8 +76,6 @@ const ProductsList: FC<ProductListProps> = ({ isAdmin }) => {
                 description={product.description}
                 stockCount={product.count}
                 addProductToCart={() => handleAddProductToCart(product)}
-
-                // addToCart={handleAddToCart}
               />
             );
           })

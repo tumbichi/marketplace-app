@@ -1,15 +1,5 @@
-import {
-  Box,
-  Button,
-  Center,
-  Flex,
-  Heading,
-  Text,
-  useDisclosure,
-} from "@chakra-ui/react";
-import { LayoutProps } from "framer-motion";
-import React, { FC, PropsWithChildren, ReactNode } from "react";
-import { Drawer, Header } from "../../molecules";
+import { Box, Flex, Heading, Text } from "@chakra-ui/react";
+import React, { FC, ReactNode } from "react";
 
 interface LayoutProps {
   children: {
