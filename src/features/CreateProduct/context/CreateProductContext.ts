@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import Product from "../../../models/Product";
+import ProductCreationDTO from "../../../models/ProductCreationDTO";
 import CreateProductState from "../models/CreateProductState";
 
 export type ProductKey = "title" | "description" | "price" | "category";
@@ -14,7 +14,7 @@ export interface CreateProductContext {
       label?: string
     ) => void;
     onChangeImage: (file: File, src: string) => void;
-    handleCreateProduct: () => Promise<Product>;
+    handleCreateProduct: () => Promise<ProductCreationDTO>;
     resetForm: () => void;
   };
 }

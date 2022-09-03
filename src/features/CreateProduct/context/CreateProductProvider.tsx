@@ -3,7 +3,6 @@ import CreateProductContext, { ProductKey } from "./CreateProductContext";
 import React, {
   FC,
   PropsWithChildren,
-  Reducer,
   useCallback,
   useReducer,
 } from "react";
@@ -14,7 +13,7 @@ import createProductReducer, {
 import { useCurrency } from "react-hook-currency";
 import { createProductService } from "../services/createProduct";
 import { useToast } from "@chakra-ui/react";
-import Product from "../../../models/Product";
+import ProductCreationDTO from "../../../models/ProductCreationDTO";
 
 const CreateProductProvider: FC<PropsWithChildren> = ({ children }) => {
   const toast = useToast();
@@ -53,7 +52,7 @@ const CreateProductProvider: FC<PropsWithChildren> = ({ children }) => {
     dispatch({ type: "CLEAR_FORM" });
   };
 
-  const handleCreateProduct = async (): Promise<Product> => {
+  const handleCreateProduct = async (): Promise<ProductCreationDTO> => {
     const { productForm } = state;
 
     if (productForm.title.value.length < 3) {

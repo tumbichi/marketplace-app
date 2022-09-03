@@ -1,6 +1,6 @@
 import axios from "axios";
 import ImageData from "../../../models/ImageData";
-import Product from "../../../models/Product";
+import ProductCreationDTO from "../../../models/ProductCreationDTO";
 
 export const createProductService = async ({
   title,
@@ -9,7 +9,7 @@ export const createProductService = async ({
   image,
   categoryId,
   storeId,
-}: Product): Promise<Product> => {
+}: Omit<ProductCreationDTO, "id">): Promise<ProductCreationDTO> => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/image/upload`, {
     method: "POST",
     body: image,
