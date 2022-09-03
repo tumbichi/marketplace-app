@@ -1,21 +1,25 @@
 import React, { FC, useEffect, useState } from "react";
 import axios from "axios";
-import { Box, Grid, IconButton, Text, useToast } from "@chakra-ui/react";
+import { Box, Grid, Text, useToast } from "@chakra-ui/react";
 import { ProductCard } from "../../molecules";
-import { DeleteIcon } from "@chakra-ui/icons";
 import { deleteProductService } from "../CreateProduct/services/deleteProduct";
+import useShoppingCart from "../ShoppingCart/hooks/useShoppingCart";
+import ProductCreationDTO from "../../models/ProductCreationDTO";
+import Product from "../../models/Product";
 
 interface ProductListProps {
   isAdmin?: boolean;
 }
 
 const ProductsList: FC<ProductListProps> = ({ isAdmin }) => {
+  const {
+    actions: { addProductToCart },
+  } = useShoppingCart();
   const toast = useToast();
   const [products, setProducts] = useState([]);
-  const [deleteLoading, setDeleteLoading] = useState(false);
 
   const handleDeleteProduct = (productId: number) => {
-    setDeleteLoading(true);
+    // setDeleteLoading(true);
 
     deleteProductService(productId)
       .then((deletedProduct) => {
@@ -36,8 +40,17 @@ const ProductsList: FC<ProductListProps> = ({ isAdmin }) => {
           status: "error",
           isClosable: true,
         });
-      })
-      .finally(() => setDeleteLoading(false));
+      });
+    // .finally(() => setDeleteLoading(false));
+  };
+
+  const handleAddProductToCart = (product: Product) => {
+    addProductToCart(product);
+    toast({
+      title: `${product.title} added to cart!`,
+      status: "success",
+      isClosable: true,
+    });
   };
 
   useEffect(() => {
@@ -54,39 +67,22 @@ const ProductsList: FC<ProductListProps> = ({ isAdmin }) => {
         {products.length === 0 ? (
           <Text>{"There are not products :("}</Text>
         ) : (
-          products.map(({ id, title, price, description, imageUrl }) => (
-            <>
-              {isAdmin ? (
-                <Box position="relative">
-                  <Box top="-8px" right="12px" position="absolute">
-                    <IconButton
-                      isLoading={deleteLoading}
-                      colorScheme="red"
-                      variant="solid"
-                      aria-label="delete icons"
-                      icon={<DeleteIcon />}
-                      onClick={() => handleDeleteProduct(id)}
-                    />
-                  </Box>
-                  <ProductCard
-                    key={title}
-                    title={title}
-                    price={Number.parseFloat(price)}
-                    imageUrl={imageUrl}
-                    description={description}
-                  />
-                </Box>
-              ) : (
-                <ProductCard
-                  key={title}
-                  title={title}
-                  price={Number.parseFloat(price)}
-                  imageUrl={imageUrl}
-                  description={description}
-                />
-              )}
-            </>
-          ))
+          products.map((product: Product) => {
+            console.log("product:>> ", product);
+            return (
+              <ProductCard
+                key={product.title}
+                title={product.title}
+                price={product.price}
+                imageUrl={product.imageUrl}
+                description={product.description}
+                stockCount={product.count}
+                addProductToCart={() => handleAddProductToCart(product)}
+
+                // addToCart={handleAddToCart}
+              />
+            );
+          })
         )}
       </Grid>
     </Box>

@@ -1,8 +1,15 @@
-import { BellIcon } from "@chakra-ui/icons";
-import { Badge, Box, Center, Flex, IconButton, Text, Toast } from "@chakra-ui/react";
+import {
+  Badge,
+  Box,
+  Center,
+  Flex,
+  IconButton,
+  Text,
+  Tooltip,
+} from "@chakra-ui/react";
 import Image from "next/image";
 import React, { FC } from "react";
-import ProductCreationDTO from "../../models/ProductCreationDTO";
+import formatToCurrency from "../../utils/formatToCurrency";
 import Icon from "../Icon/Icon";
 
 interface ProductCardProps {
@@ -11,7 +18,8 @@ interface ProductCardProps {
   imageAlt?: string;
   description: string;
   price: number;
-  addProductToCart: () => void
+  stockCount: number;
+  addProductToCart: () => void;
 }
 
 const ProductCard: FC<ProductCardProps> = (props) => {
@@ -66,42 +74,45 @@ const ProductCard: FC<ProductCardProps> = (props) => {
             textTransform="uppercase"
             ml="2"
           >
-            &bull; Stock {Math.floor(Math.random() * 30)}
+            &bull; Stock {props.stockCount}
           </Box>
         </Box>
-        {/* <Box flex={1}> */}
-        {/* <Text py={1}>{props.description}</Text> */}
-        {/* </Box> */}
         <Flex mb={3} justifyContent="space-between">
           <Box position="relative">
-            <Box position="absolute" height="100%" width="100%" zIndex={1} pointerEvents="none">
+            <Box
+              position="absolute"
+              height="100%"
+              width="100%"
+              zIndex={1}
+              pointerEvents="none"
+            >
               <Box
                 position="absolute"
                 right={0}
                 bottom={0}
                 borderRadius="full"
                 bg="brand.500"
-                // px="2px"
                 w="14px"
                 h="14px"
               >
                 <Center>
-                  <Text fontWeight="semibold" fontSize="9px" color="white">+</Text>
+                  <Text fontWeight="semibold" fontSize="9px" color="white">
+                    +
+                  </Text>
                 </Center>
               </Box>
             </Box>
-            <IconButton
-              borderRadius="full"
-              aria-label="bell icon"
-              icon={<Icon name="shopping-cart" />}
-              onClick={props.addProductToCart}
-            />
+            <Tooltip label="Add product to cart" hasArrow>
+              <IconButton
+                borderRadius="full"
+                aria-label="bell icon"
+                icon={<Icon name="shopping-cart" />}
+                onClick={props.addProductToCart}
+              />
+            </Tooltip>
           </Box>
           <Text fontWeight="semibold" alignSelf={"flex-end"}>
-            {props.price.toLocaleString("es-AR", {
-              style: "currency",
-              currency: "ARS",
-            })}
+            {formatToCurrency(props.price)}
           </Text>
         </Flex>
       </Flex>

@@ -1,7 +1,14 @@
-export default interface Product {
+export interface Product {
   id: number;
+  createdAt: Date;
+  updatedAt: Date;
   title: string;
-  description: string;
-  price: number;
   imageUrl: string;
+  price: string;
+  description: string;
+  stock: boolean;
+  active: boolean;
+  count: number;
+  categoryId: number;
+  storeId: number;
 }

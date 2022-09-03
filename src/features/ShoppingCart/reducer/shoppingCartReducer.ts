@@ -1,9 +1,14 @@
 import Product from "../../../models/Product";
 import ShoppingCartActions from "../actions/ShoppingCartActions";
 
-interface ShoppingCartState {
+interface ShoppingCartItem {
+  product: Product;
+  quantity: number;
+}
+
+export interface ShoppingCartState {
   loading: boolean;
-  products: Product[];
+  items: ShoppingCartItem[];
 }
 
 export default function shoppingCartReducer(
@@ -11,10 +16,36 @@ export default function shoppingCartReducer(
   action: ShoppingCartActions
 ) {
   switch (action.type) {
-    case "shoppingCart/addProduct": {
+    case "shoppingCart/addProductToCart": {
+      const productExists = state.items.find(
+        (cp) => cp.product.id === action.payload.id
+      );
+      if (productExists) {
+        const shopingCartUpdated = state.items.map((cartItem) => {
+          if (cartItem.product.id === action.payload.id) {
+            const quantityUpdated = cartItem.quantity + 1;
+            return {
+              product: cartItem.product,
+              quantity: quantityUpdated,
+            };
+          }
+          return cartItem;
+        });
+
+        return {
+          ...state,
+          items: shopingCartUpdated,
+        };
+      }
       return {
         ...state,
-        products: [...state.products, action.payload],
+        items: [
+          ...state.items,
+          {
+            product: action.payload,
+            quantity: 1,
+          },
+        ],
       };
     }
     case "shoppingCart/showLoading": {
@@ -27,6 +58,44 @@ export default function shoppingCartReducer(
       return {
         ...state,
         loading: false,
+      };
+    }
+    case "shoppingCart/increaseOneProductToCart": {
+      const shopingCartUpdated = state.items.map((cartItem) => {
+        if (cartItem.product.id === action.payload.id) {
+          const quantityUpdated = cartItem.quantity + 1;
+          return {
+            product: cartItem.product,
+            quantity: quantityUpdated,
+          };
+        }
+        return cartItem;
+      });
+
+      return {
+        ...state,
+        items: shopingCartUpdated,
+      };
+    }
+    case "shoppingCart/decrementOneProductToCart": {
+      const shoppingCart = [...state.items];
+      const shopingCartUpdated = shoppingCart
+        .map((cartItem) => {
+          if (cartItem.product.id === action.payload.id) {
+            const quantityUpdated = cartItem.quantity - 1;
+
+            return {
+              product: cartItem.product,
+              quantity: quantityUpdated,
+            };
+          }
+          return cartItem;
+        })
+        .filter((cartItem) => cartItem.quantity !== 0);
+
+      return {
+        ...state,
+        items: shopingCartUpdated,
       };
     }
     default: {
