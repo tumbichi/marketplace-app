@@ -3,10 +3,10 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { extendTheme } from "@chakra-ui/react";
 import { Layout } from "../template";
 import Navbar from "../features/Navbar/Navbar";
-
 import "@fortawesome/fontawesome-svg-core/styles.css"; // import Font Awesome CSS
 import { config } from "@fortawesome/fontawesome-svg-core";
 import ShoppingCartProvider from "../features/ShoppingCart/context/ShoppingCartProvider";
+import "../assets/icons";
 config.autoAddCss = false;
 
 const theme = extendTheme({
