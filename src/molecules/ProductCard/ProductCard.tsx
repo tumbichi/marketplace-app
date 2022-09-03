@@ -1,5 +1,9 @@
-import { Badge, Box, Flex, Image, Text } from "@chakra-ui/react";
+import { BellIcon } from "@chakra-ui/icons";
+import { Badge, Box, Center, Flex, IconButton, Text, Toast } from "@chakra-ui/react";
+import Image from "next/image";
 import React, { FC } from "react";
+import ProductCreationDTO from "../../models/ProductCreationDTO";
+import Icon from "../Icon/Icon";
 
 interface ProductCardProps {
   title: string;
@@ -7,19 +11,36 @@ interface ProductCardProps {
   imageAlt?: string;
   description: string;
   price: number;
+  addProductToCart: () => void
 }
 
 const ProductCard: FC<ProductCardProps> = (props) => {
   return (
-    <Box
+    <Flex
       maxW="sm"
+      minW="340px"
+      h="360px"
       borderWidth="1px"
       borderRadius="lg"
       overflow="hidden"
+      direction="column"
     >
-      <Image src={props.imageUrl} alt={props.imageAlt} maxH="" />
-
-      <Flex p="6" flexDirection="column" justifyContent="space-between">
+      <Box height="100%" maxH="240px">
+        <Image
+          height="240px"
+          width="360px"
+          layout="fixed"
+          objectFit="contain"
+          src={props.imageUrl}
+          alt={props.imageAlt}
+        />
+      </Box>
+      <Flex
+        flex={1}
+        px="6"
+        flexDirection="column"
+        justifyContent="space-between"
+      >
         <Box
           display="flex"
           alignItems="baseline"
@@ -37,7 +58,7 @@ const ProductCard: FC<ProductCardProps> = (props) => {
           <Badge borderRadius="full" px="2" colorScheme="teal">
             New
           </Badge>
-          {/* <Box
+          <Box
             color="gray.500"
             fontWeight="semibold"
             letterSpacing="wide"
@@ -45,14 +66,38 @@ const ProductCard: FC<ProductCardProps> = (props) => {
             textTransform="uppercase"
             ml="2"
           >
-            {props.beds} beds &bull; {props.baths} baths
-          </Box> */}
+            &bull; Stock {Math.floor(Math.random() * 30)}
+          </Box>
         </Box>
-        <Box flex={1} minH="80px">
-          <Text py={1}>{props.description}</Text>
-        </Box>
-        <Flex mt={6} alignContent="flex-end" justifyContent="flex-end" flex={1}>
-          <Text fontSize="xl" fontWeight="semibold">
+        {/* <Box flex={1}> */}
+        {/* <Text py={1}>{props.description}</Text> */}
+        {/* </Box> */}
+        <Flex mb={3} justifyContent="space-between">
+          <Box position="relative">
+            <Box position="absolute" height="100%" width="100%" zIndex={1} pointerEvents="none">
+              <Box
+                position="absolute"
+                right={0}
+                bottom={0}
+                borderRadius="full"
+                bg="brand.500"
+                // px="2px"
+                w="14px"
+                h="14px"
+              >
+                <Center>
+                  <Text fontWeight="semibold" fontSize="9px" color="white">+</Text>
+                </Center>
+              </Box>
+            </Box>
+            <IconButton
+              borderRadius="full"
+              aria-label="bell icon"
+              icon={<Icon name="shopping-cart" />}
+              onClick={props.addProductToCart}
+            />
+          </Box>
+          <Text fontWeight="semibold" alignSelf={"flex-end"}>
             {props.price.toLocaleString("es-AR", {
               style: "currency",
               currency: "ARS",
@@ -60,7 +105,7 @@ const ProductCard: FC<ProductCardProps> = (props) => {
           </Text>
         </Flex>
       </Flex>
-    </Box>
+    </Flex>
   );
 };
 
