@@ -1,5 +1,4 @@
 import {
-  Badge,
   Box,
   Center,
   Flex,
@@ -25,59 +24,31 @@ interface ProductCardProps {
 const ProductCard: FC<ProductCardProps> = (props) => {
   return (
     <Flex
-      maxW="sm"
-      minW="340px"
-      h="360px"
       borderWidth="1px"
       borderRadius="lg"
       overflow="hidden"
       direction="column"
     >
-      <Box height="100%" maxH="240px">
+      <Center height="100%">
         <Image
-          height="240px"
-          width="360px"
+          height="140px"
+          width="140px"
           layout="fixed"
           objectFit="contain"
           src={props.imageUrl}
           alt={props.imageAlt}
         />
-      </Box>
+      </Center>
       <Flex
         flex={1}
-        px="6"
+        px={6}
         flexDirection="column"
         justifyContent="space-between"
       >
-        <Box
-          display="flex"
-          alignItems="baseline"
-          justifyContent="space-between"
-        >
-          <Text
-            mt="1"
-            fontWeight="semibold"
-            as="h4"
-            lineHeight="tight"
-            noOfLines={1}
-          >
-            {props.title}
-          </Text>
-          <Badge borderRadius="full" px="2" colorScheme="teal">
-            New
-          </Badge>
-          <Box
-            color="gray.500"
-            fontWeight="semibold"
-            letterSpacing="wide"
-            fontSize="xs"
-            textTransform="uppercase"
-            ml="2"
-          >
-            &bull; Stock {props.stockCount}
-          </Box>
-        </Box>
-        <Flex mb={3} justifyContent="space-between">
+        <Text mt={4} fontWeight="semibold" as="h4" lineHeight="tight">
+          {props.title}
+        </Text>
+        <Flex mb={3} mt={6} justifyContent="space-between">
           <Box position="relative">
             <Box
               position="absolute"
@@ -111,7 +82,7 @@ const ProductCard: FC<ProductCardProps> = (props) => {
               />
             </Tooltip>
           </Box>
-          <Text fontWeight="semibold" alignSelf={"flex-end"}>
+          <Text fontWeight="semibold" fontSize="lg" alignSelf={"flex-end"}>
             {formatToCurrency(props.price)}
           </Text>
         </Flex>

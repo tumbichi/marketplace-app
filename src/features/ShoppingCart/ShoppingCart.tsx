@@ -60,8 +60,8 @@ const ShoppingCart = () => {
                     <Flex>
                       <Box>
                         <Image
-                          height="196px"
-                          width="196px"
+                          height="140px"
+                          width="140px"
                           layout="fixed"
                           objectFit="contain"
                           src={shoppingCartItem.product.imageUrl}
@@ -84,7 +84,7 @@ const ShoppingCart = () => {
                         >
                           {shoppingCartItem.product.title}
                         </Text>
-                        <Flex  justifyContent="space-between">
+                        <Flex justifyContent="space-between">
                           <Flex gap={1}>
                             <Quantity
                               value={shoppingCartItem.quantity}
@@ -98,6 +98,7 @@ const ShoppingCart = () => {
                                   shoppingCartItem.product
                                 )
                               }
+                              maxValue={shoppingCartItem.product.count}
                             />
                           </Flex>
                           <Text fontSize="xl" fontWeight="semibold">
