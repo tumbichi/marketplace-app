@@ -2,11 +2,11 @@ import { Badge, Box, Flex, Image, Text } from "@chakra-ui/react";
 import React, { FC } from "react";
 
 interface ProductCardProps {
-  title: string;
-  imageUrl: string;
+  title?: string;
+  imageUrl?: string;
   imageAlt?: string;
-  description: string;
-  price: number;
+  description?: string;
+  price?: number;
 }
 
 const ProductCard: FC<ProductCardProps> = (props) => {
@@ -53,7 +53,7 @@ const ProductCard: FC<ProductCardProps> = (props) => {
         </Box>
         <Flex mt={6} alignContent="flex-end" justifyContent="flex-end" flex={1}>
           <Text fontSize="xl" fontWeight="semibold">
-            {props.price.toLocaleString("es-AR", {
+            {props.price?.toLocaleString("es-AR", {
               style: "currency",
               currency: "ARS",
             })}
