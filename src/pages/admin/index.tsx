@@ -4,15 +4,15 @@ import React from "react";
 const BackofficePages = () => {
   return (
     <Center h="100vh" flexDirection="column">
-      <Heading mb={10}>Menus</Heading>
+      <Heading mb={10}>Menu</Heading>
       <Link href="/admin/products">
-        <Text>list products</Text>
+        <Text>Products list</Text>
       </Link>
       <Link href="/admin/products/create-product">
-        <Text>create product</Text>
+        <Text>Create product</Text>
       </Link>
       <Link href="/admin/create-category">
-        <Text>create category</Text>
+        <Text>Create category</Text>
       </Link>
     </Center>
   );

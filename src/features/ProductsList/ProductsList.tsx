@@ -4,7 +4,6 @@ import { Box, Grid, IconButton, Text, useToast } from "@chakra-ui/react";
 import { ProductCard } from "../../molecules";
 import { DeleteIcon } from "@chakra-ui/icons";
 import { deleteProductService } from "../CreateProduct/services/deleteProduct";
-import { products } from '../../mocks/products'
 import AdminProductTable from "./admin/AdminProductTable";
 import ClientProductGrid from "./client/ClientProductGrid";
 
@@ -15,6 +14,7 @@ interface ProductListProps {
 const ProductsList: FC<ProductListProps> = ({ isAdmin }) => {
   const toast = useToast();
   const [deleteLoading, setDeleteLoading] = useState(false);
+  const [products, setProducts] = useState([]);
 
   const handleDeleteProduct = (productId: number) => {
     setDeleteLoading(true);
@@ -29,7 +29,8 @@ const ProductsList: FC<ProductListProps> = ({ isAdmin }) => {
         axios
           .get(`${process.env.NEXT_PUBLIC_API_URL}/products`)
           .then(({ data }) => {
-            // setProducts(data);
+            console.log(data, 'data')
+            setProducts(data);
           });
       })
       .catch(() => {
@@ -42,13 +43,13 @@ const ProductsList: FC<ProductListProps> = ({ isAdmin }) => {
       .finally(() => setDeleteLoading(false));
   };
 
-  // useEffect(() => {
-  //   axios
-  //     .get(`${process.env.NEXT_PUBLIC_API_URL}/products`)
-  //     .then(({ data }) => {
-  //       setProducts(data);
-  //     });
-  // }, []);
+  useEffect(() => {
+    axios
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/products`)
+      .then(({ data }) => {
+        setProducts(data);
+      });
+  }, []);
   
   if (!products) {
     return (
@@ -57,7 +58,10 @@ const ProductsList: FC<ProductListProps> = ({ isAdmin }) => {
   } else {
     return (
             <>
-              {isAdmin ? <AdminProductTable products={products}/> : <ClientProductGrid products={products}/>}
+              {isAdmin ? 
+              <AdminProductTable products={products}/> : 
+              <ClientProductGrid products={products}/>
+              }
             </>
     );
   }
