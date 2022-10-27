@@ -10,7 +10,7 @@ export type CreateCategoryReducer = Reducer<
 export const initialState: CreateCategoryState = {
   loading: false,
   title: "",
-  }
+}
 
 const createCategoryReducer: CreateCategoryReducer = (
   state: CreateCategoryState,

@@ -1,2 +1,2 @@
 export * from "./createCategory";
-export * from "./deleteProduct";
+export * from "./deleteCategory";
