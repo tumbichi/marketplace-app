@@ -12,6 +12,7 @@ interface ProductListProps {
 
 const ProductsList: FC<ProductListProps> = ({ isAdmin }) => {
   const {
+    state: { items },
     actions: { addProductToCart },
   } = useShoppingCart();
   const toast = useToast();
@@ -45,17 +46,13 @@ const ProductsList: FC<ProductListProps> = ({ isAdmin }) => {
 
   const handleAddProductToCart = (product: Product) => {
     addProductToCart(product);
-    toast({
-      title: `${product.title} added to cart!`,
-      status: "success",
-      isClosable: true,
-    });
   };
 
   useEffect(() => {
     axios
-      .get(`${process.env.NEXT_PUBLIC_API_URL}/products`)
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/productsStock`)
       .then(({ data }) => {
+        console.log("data :>> ", data);
         setProducts(data);
       });
   }, []);

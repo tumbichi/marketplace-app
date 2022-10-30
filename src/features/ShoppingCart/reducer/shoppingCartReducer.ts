@@ -18,11 +18,14 @@ export default function shoppingCartReducer(
   switch (action.type) {
     case "shoppingCart/addProductToCart": {
       const productExists = state.items.find(
-        (cp) => cp.product.id === action.payload.id
+        (cartItem) => cartItem.product.id === action.payload.id
       );
       if (productExists) {
         const shopingCartUpdated = state.items.map((cartItem) => {
-          if (cartItem.product.id === action.payload.id) {
+          if (
+            cartItem.product.id === action.payload.id &&
+            cartItem.quantity < cartItem.product.count
+          ) {
             const quantityUpdated = cartItem.quantity + 1;
             return {
               product: cartItem.product,
