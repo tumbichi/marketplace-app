@@ -13,7 +13,7 @@ import createProductReducer, {
 import { useCurrency } from "react-hook-currency";
 import { createProductService } from "../services/createProduct";
 import { useToast } from "@chakra-ui/react";
-import ProductCreationDTO from "../../../../models/ProductCreationDTO";
+import ProductCreationDTO from "../../../models/ProductCreationDTO";
 
 const CreateProductProvider: FC<PropsWithChildren> = ({ children }) => {
   const toast = useToast();
