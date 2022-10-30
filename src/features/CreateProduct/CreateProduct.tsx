@@ -182,7 +182,7 @@ const CreateProduct = () => {
                 <input
                   ref={ref}
                   onChange={handleImageChange}
-                  accept=".jpg, .png, .gif, .jpeg"
+                  accept=".jpg, .png, .gif, .jpeg, .webp"
                   type="file"
                   src={image?.src}
                 />
