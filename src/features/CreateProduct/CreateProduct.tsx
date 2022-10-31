@@ -31,6 +31,7 @@ import { Category } from "../../models/Category";
 import SelectItem from "../../models/SelectItem";
 import useCreateProduct from "./hooks/useCreateProduct";
 import { RepeatIcon } from "@chakra-ui/icons";
+import TestForm from "../../molecules/InputForm/TestForm";
 
 const CreateProduct = () => {
   const {
@@ -119,7 +120,8 @@ const CreateProduct = () => {
           />
         </Flex>
         <Grid h="100%" templateColumns="repeat(2, 1fr)">
-          <form onSubmit={handleSubmit}>
+          <TestForm />
+         {/*  <form onSubmit={handleSubmit}>
             <Flex gap={8} mt={4} flexDirection="column">
               <FormControl
                 isInvalid={title.value.length > 0 && title.value.length < 3}
@@ -191,7 +193,7 @@ const CreateProduct = () => {
             <Button bg="brand.500" mt={6} type="submit">
               Add product
             </Button>
-          </form>
+          </form> */}
           <Flex justifyContent="center">
             <Box>
               {image && <Image src={image.src} alt="New product image" />}
