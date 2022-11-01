@@ -96,7 +96,7 @@ const CreateProductProvider: FC<PropsWithChildren> = ({ children }) => {
         title: productForm.title.value,
         description: productForm.description.value,
         price: toNumber(productForm.price.value),
-        image: imageFormData,
+        imageUrl: imageFormData,
         categoryId: productForm.category.value,
         storeId: 1,
       });

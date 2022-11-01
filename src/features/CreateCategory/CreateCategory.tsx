@@ -32,7 +32,7 @@ import SelectItem from "../../models/SelectItem";
 import useCreateCategory from "./hooks/useCreateCategory";
 import { RepeatIcon } from "@chakra-ui/icons";
 
-const CreateProduct = () => {
+const CreateCategory = () => {
   const {
     state: {
       loading,
@@ -140,4 +140,4 @@ const CreateProduct = () => {
   );
 };
 
-export default CreateProduct;
+export default CreateCategory;

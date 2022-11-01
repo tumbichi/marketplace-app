@@ -34,14 +34,14 @@ const AdminProductTable: FC<AdminProductTableProps> = ({ products }) => {
                         </Tr>
                     </Thead>
                     <Tbody>
-                    {products.map(({ name, price, description, image }) => (
+                    {products.map(({ title, price, description, imageUrl }) => (
                         <Tr>
-                            <Th>{name}</Th>
+                            <Th>{title}</Th>
                             <Th>{description}</Th>
                             <Th>{price}</Th>
                             <Th>
                                 <Image
-                                    src={image}
+                                    src={imageUrl.toString()}
                                     borderRadius='full'
                                     boxSize='50px'
                                     objectFit='contain'

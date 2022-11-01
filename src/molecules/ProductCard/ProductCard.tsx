@@ -2,11 +2,11 @@ import { Badge, Box, Flex, Image, Text } from "@chakra-ui/react";
 import React, { FC } from "react";
 
 interface ProductCardProps {
-  title?: string;
-  imageUrl?: string;
+  title: string;
+  imageUrl: string;
   imageAlt?: string;
-  description?: string;
-  price?: number;
+  description: string;
+  price: number;
 }
 
 const ProductCard: FC<ProductCardProps> = (props) => {
@@ -37,16 +37,6 @@ const ProductCard: FC<ProductCardProps> = (props) => {
           <Badge borderRadius="full" px="2" colorScheme="teal">
             New
           </Badge>
-          {/* <Box
-            color="gray.500"
-            fontWeight="semibold"
-            letterSpacing="wide"
-            fontSize="xs"
-            textTransform="uppercase"
-            ml="2"
-          >
-            {props.beds} beds &bull; {props.baths} baths
-          </Box> */}
         </Box>
         <Box flex={1} minH="80px">
           <Text py={1}>{props.description}</Text>

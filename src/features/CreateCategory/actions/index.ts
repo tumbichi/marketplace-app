@@ -1,1 +1,1 @@
-export * from "./CreateCategoryActions";
+export type { default as CreateCategoryActions } from "./CreateCategoryActions";

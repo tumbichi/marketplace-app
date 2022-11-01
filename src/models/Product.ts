@@ -1,10 +1,8 @@
 export default interface Product {
-  id?: number;
-  name?: string;
-  title?: string;
-  description?: string;
-  price?: number;
-  image?: any;
+  title: string;
+  description: string;
+  price: number;
+  imageUrl: FormData;
   categoryId?: number;
-  storeId?: number;
+  storeId: number;
 }

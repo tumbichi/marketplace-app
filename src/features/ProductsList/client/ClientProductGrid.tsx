@@ -8,16 +8,16 @@ interface ClientProductGridProps {
 }
 
 const ClientProductGrid: FC<ClientProductGridProps> = ({ products }) => {
+    console.log(products[0], 'cabeeesaaaa')
     return (
         <Box h="100%" width="100%" p={4}>
             <Grid templateColumns="repeat(4, 1fr)" w="100%" my={8} gap={8}>
-                {products.map(({ id, name, price, description, image }) => (
+                {products.map(({ title, price, description, imageUrl }) => (
                     <>
                         <ProductCard
-                            key={id}
-                            title={name}
+                            title={title}
                             price={price}
-                            imageUrl={image}
+                            imageUrl={imageUrl.toString()}
                             description={description}
                         />
                     </>
