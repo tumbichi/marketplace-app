@@ -5,8 +5,8 @@ interface ProductCardProps {
   title?: string;
   imageUrl?: string;
   imageAlt?: string;
-  description?: string;
-  price?: number;
+  description: string;
+  price: number;
 }
 
 const ProductCard: FC<ProductCardProps> = (props) => {
