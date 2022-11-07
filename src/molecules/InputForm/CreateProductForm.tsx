@@ -8,6 +8,7 @@ import {
     Input,
     Box,
     Button,
+    Flex,
 } from "@chakra-ui/react";
 import { Grid, GridItem } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -18,7 +19,7 @@ import InputNumberForm from '../InputNumberForm/InputNumberForm';
 import ControlledSelect from '../SelectForm/SelectForm';
 import DropzoneForm from '../Dropzone/DropzoneForm';
 
-interface LoginForm {
+export interface LoginForm {
   title: string;
   description: string;
   price: string;
@@ -32,33 +33,23 @@ const mock = [
     { value: '3', label: 'Category 3' },
 ];
 
-const TestForm = () => {
+const CreateProductForm = () => {
     const initialValue = {
         title: '',
         description: '',
         price: '',
-        category: ''
+        category: '',
     };
 
     const schema = yup.object().shape({
-        title: yup.string().required(),
-        description: yup.string().required(),
-        price: yup.string().required(),
-        image: yup.string().required(),
-        /* category: yup
-        .array()
-        .required("You must select reasons for signing up")
-        .of(
-          yup.object().shape({
-            { value: '1', label: 'Category 1' },
-            { value: '2', label: 'Category 2' },
-            { value: '3', label: 'Category 3' },
-          })
-        ), */
+        title: yup.string().required('Title is required'),
+        description: yup.string().required('Description is required'),
+        price: yup.string().required('Price is required'),
+        image: yup.array().required('Image is required'),
       }).required();
 
       const { 
-        register, 
+        register,
         handleSubmit,
         formState: { errors },
     } = useForm<LoginForm>({
@@ -67,10 +58,11 @@ const TestForm = () => {
         resolver: yupResolver(schema),
         defaultValues: initialValue,
       });
+    
 
+      const onSubmit = () => {
 
-      const onSubmit = (values:object) => {
-        console.log(values);
+        console.log( 'SASHA'); 
       };
       const onError = (error:object) => {
         console.log(error);
@@ -83,7 +75,7 @@ const TestForm = () => {
                 name="title"
                 error={errors["title"]?.message}
                 register={register}
-            />
+                />
             <TextAreaForm 
               label='Description'
               placeholder='Description'
@@ -116,4 +108,4 @@ const TestForm = () => {
     );
 };
 
-export default TestForm;
+export default CreateProductForm;
