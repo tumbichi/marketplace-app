@@ -1,18 +1,20 @@
 import axios from "axios";
 import { Category } from "../../../models/Category";
 
-export const createCategoryService = async ({
-  id,
-  title
-}: Category): Promise<Category> => {
+interface CategoryCreationDto extends Omit<Category, "id"> {}
 
-  const response = await axios.post(
-    `${process.env.NEXT_PUBLIC_API_URL}/categories`,
-    {
-      id,
-      title
-    }
-  );
-
-  return Promise.resolve(response.data);
+export const createCategoryService = async ({ title }: CategoryCreationDto) => {
+  try {
+    const { data: category } = await axios.post<Category>(
+      `${process.env.NEXT_PUBLIC_API_URL}/categories`,
+      {
+        title,
+      }
+    );
+    return category;
+  } catch (e) {
+    // TODO: Manejar el error
+    console.error("CREATE CATEGORY ERROR", e);
+    throw new Error("error") as any;
+  }
 };

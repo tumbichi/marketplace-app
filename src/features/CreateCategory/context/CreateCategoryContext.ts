@@ -7,11 +7,8 @@ export interface CreateCategoryContext {
   state: CreateCategoryState;
   actions: {
     hideLoading: () => void;
-    onChangeFormInput: (
-      key: "title",
-      value: string,
-    ) => void;
-    handleCreateCategory: () => Promise<Category>;
+    onChangeFormInput: (key: "title", value: string) => void;
+    handleCreateCategory: () => void;
   };
 }
 

@@ -2,12 +2,12 @@ import axios from "axios";
 
 export const deleteCategoryService = async (categoryId: number) => {
   try {
-    const res = await axios.delete(
+    await axios.delete<void>(
       `${process.env.NEXT_PUBLIC_API_URL}/categories/${categoryId}`
     );
-    console.log("res.data", res.data);
-    return Promise.resolve(res.data);
+    return;
   } catch (e) {
-    return Promise.reject(e);
+    console.error("DELETE CATEGORY ERROR", e);
+    throw new Error("error") as any;
   }
 };

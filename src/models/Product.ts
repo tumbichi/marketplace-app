@@ -3,6 +3,6 @@ export default interface Product {
   description: string;
   price: number;
   imageUrl: FormData;
-  categoryId?: number;
+  categoryId: number;
   storeId: number;
 }

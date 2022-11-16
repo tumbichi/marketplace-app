@@ -25,7 +25,6 @@ import {
   Text,
   Textarea,
 } from "@chakra-ui/react";
-import { Select, SingleValue } from "chakra-react-select";
 import axios from "axios";
 import { Category } from "../../models/Category";
 import SelectItem from "../../models/SelectItem";
@@ -34,14 +33,8 @@ import { RepeatIcon } from "@chakra-ui/icons";
 
 const CreateCategory = () => {
   const {
-    state: {
-      loading,
-      title,
-    },
-    actions: {
-      onChangeFormInput,
-      handleCreateCategory,
-    },
+    state: { loading, title },
+    actions: { onChangeFormInput, handleCreateCategory },
   } = useCreateCategory();
 
   const [categories, setCategories] = useState<SelectItem<number>[]>([]);
@@ -54,7 +47,7 @@ const CreateCategory = () => {
 
   const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    handleCreateCategory()
+    handleCreateCategory();
   };
 
   useEffect(() => {
@@ -85,9 +78,7 @@ const CreateCategory = () => {
         <Grid h="100%" templateColumns="repeat(2, 1fr)">
           <form onSubmit={handleSubmit}>
             <Flex gap={8} mt={4} flexDirection="column">
-              <FormControl
-                isInvalid={title.length > 0 && title.length < 3}
-              >
+              <FormControl isInvalid={title.length > 0 && title.length < 3}>
                 <FormLabel>Title</FormLabel>
                 <Input
                   width="auto"
