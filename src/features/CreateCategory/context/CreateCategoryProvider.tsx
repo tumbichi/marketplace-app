@@ -33,7 +33,6 @@ const CreateCategoryProvider: FC<PropsWithChildren> = ({ children }) => {
         status: "error",
         isClosable: true,
       });
-      throw new Error("The title must be 3 or more characters long");
     }
 
     dispatch({ type: "SHOW_LOADING_ACTION" });
