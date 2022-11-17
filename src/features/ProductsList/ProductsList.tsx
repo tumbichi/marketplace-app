@@ -4,6 +4,8 @@ import { Box, Grid, IconButton, Text, useToast } from "@chakra-ui/react";
 import { ProductCard } from "../../molecules";
 import { DeleteIcon } from "@chakra-ui/icons";
 import { deleteProductService } from "../CreateProduct/services/deleteProduct";
+import AdminProductTable from "./admin/AdminProductTable";
+import ClientProductGrid from "./client/ClientProductGrid";
 
 interface ProductListProps {
   isAdmin?: boolean;
@@ -11,8 +13,8 @@ interface ProductListProps {
 
 const ProductsList: FC<ProductListProps> = ({ isAdmin }) => {
   const toast = useToast();
-  const [products, setProducts] = useState([]);
   const [deleteLoading, setDeleteLoading] = useState(false);
+  const [products, setProducts] = useState([]);
 
   const handleDeleteProduct = (productId: number) => {
     setDeleteLoading(true);
@@ -32,7 +34,7 @@ const ProductsList: FC<ProductListProps> = ({ isAdmin }) => {
       })
       .catch(() => {
         toast({
-          title: `product cannot was deleted`,
+          title: `Product cannot be deleted`,
           status: "error",
           isClosable: true,
         });
@@ -48,49 +50,19 @@ const ProductsList: FC<ProductListProps> = ({ isAdmin }) => {
       });
   }, []);
 
-  return (
-    <Box h="100%" width="100%" p={4}>
-      <Grid templateColumns="repeat(4, 1fr)" w="100%" my={8} gap={8}>
-        {products.length === 0 ? (
-          <Text>{"There are not products :("}</Text>
+  if (!products) {
+    return <Text>No products :(</Text>;
+  } else {
+    return (
+      <>
+        {isAdmin ? (
+          <AdminProductTable products={products} />
         ) : (
-          products.map(({ id, title, price, description, imageUrl }) => (
-            <>
-              {isAdmin ? (
-                <Box position="relative">
-                  <Box top="-8px" right="12px" position="absolute">
-                    <IconButton
-                      isLoading={deleteLoading}
-                      colorScheme="red"
-                      variant="solid"
-                      aria-label="delete icons"
-                      icon={<DeleteIcon />}
-                      onClick={() => handleDeleteProduct(id)}
-                    />
-                  </Box>
-                  <ProductCard
-                    key={title}
-                    title={title}
-                    price={Number.parseFloat(price)}
-                    imageUrl={imageUrl}
-                    description={description}
-                  />
-                </Box>
-              ) : (
-                <ProductCard
-                  key={title}
-                  title={title}
-                  price={Number.parseFloat(price)}
-                  imageUrl={imageUrl}
-                  description={description}
-                />
-              )}
-            </>
-          ))
+          <ClientProductGrid products={products} />
         )}
-      </Grid>
-    </Box>
-  );
+      </>
+    );
+  }
 };
 
 export default ProductsList;
