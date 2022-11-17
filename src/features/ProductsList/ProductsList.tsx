@@ -29,7 +29,6 @@ const ProductsList: FC<ProductListProps> = ({ isAdmin }) => {
         axios
           .get(`${process.env.NEXT_PUBLIC_API_URL}/products`)
           .then(({ data }) => {
-            console.log(data, 'data')
             setProducts(data);
           });
       })
@@ -50,19 +49,18 @@ const ProductsList: FC<ProductListProps> = ({ isAdmin }) => {
         setProducts(data);
       });
   }, []);
-  
+
   if (!products) {
-    return (
-      <Text>No products :(</Text>
-    )
+    return <Text>No products :(</Text>;
   } else {
     return (
-            <>
-              {isAdmin ? 
-              <AdminProductTable products={products}/> : 
-              <ClientProductGrid products={products}/>
-              }
-            </>
+      <>
+        {isAdmin ? (
+          <AdminProductTable products={products} />
+        ) : (
+          <ClientProductGrid products={products} />
+        )}
+      </>
     );
   }
 };
