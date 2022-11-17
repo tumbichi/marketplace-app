@@ -1,4 +1,5 @@
 import {
+  Badge,
   Box,
   Center,
   Flex,
@@ -84,38 +85,45 @@ const ProductCard: FC<ProductCardProps> = (props) => {
           </Box>
           <Text fontWeight="semibold" fontSize="lg" alignSelf={"flex-end"}>
             {formatToCurrency(props.price)}
+          </Text>
+        </Flex>
+        <Image src={props.imageUrl} alt={props.imageAlt} />
 
-      <Image src={props.imageUrl} alt={props.imageAlt} maxH="" />
-
-      <Flex p="6" flexDirection="column" justifyContent="space-between">
-        <Box
-          display="flex"
-          alignItems="baseline"
-          justifyContent="space-between"
-        >
-          <Text
-            mt="1"
-            fontWeight="semibold"
-            as="h4"
-            lineHeight="tight"
-            noOfLines={1}
+        <Flex p="6" flexDirection="column" justifyContent="space-between">
+          <Box
+            display="flex"
+            alignItems="baseline"
+            justifyContent="space-between"
           >
-            {props.title}
-          </Text>
-          <Badge borderRadius="full" px="2" colorScheme="teal">
-            New
-          </Badge>
-        </Box>
-        <Box flex={1} minH="80px">
-          <Text py={1}>{props.description}</Text>
-        </Box>
-        <Flex mt={6} alignContent="flex-end" justifyContent="flex-end" flex={1}>
-          <Text fontSize="xl" fontWeight="semibold">
-            {props.price?.toLocaleString("es-AR", {
-              style: "currency",
-              currency: "ARS",
-            })}
-          </Text>
+            <Text
+              mt="1"
+              fontWeight="semibold"
+              as="h4"
+              lineHeight="tight"
+              noOfLines={1}
+            >
+              {props.title}
+            </Text>
+            <Badge borderRadius="full" px="2" colorScheme="teal">
+              New
+            </Badge>
+          </Box>
+          <Box flex={1} minH="80px">
+            <Text py={1}>{props.description}</Text>
+          </Box>
+          <Flex
+            mt={6}
+            alignContent="flex-end"
+            justifyContent="flex-end"
+            flex={1}
+          >
+            <Text fontSize="xl" fontWeight="semibold">
+              {props.price?.toLocaleString("es-AR", {
+                style: "currency",
+                currency: "ARS",
+              })}
+            </Text>
+          </Flex>
         </Flex>
       </Flex>
     </Flex>

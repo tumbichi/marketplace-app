@@ -1,7 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
 import axios from "axios";
-import { Box, Grid, Text, useToast } from "@chakra-ui/react";
-import { ProductCard } from "../../molecules";
+import { Text, useToast } from "@chakra-ui/react";
 import { deleteProductService } from "../CreateProduct/services/deleteProduct";
 import useShoppingCart from "../ShoppingCart/hooks/useShoppingCart";
 import Product from "../../models/Product";
@@ -70,20 +69,10 @@ const ProductsList: FC<ProductListProps> = ({ isAdmin }) => {
         {isAdmin ? (
           <AdminProductTable products={products} />
         ) : (
-          products.map((product: Product) => {
-            return (
-              <ProductCard
-                key={product.title}
-                title={product.title}
-                price={product.price}
-                imageUrl={product.imageUrl}
-                description={product.description}
-                stockCount={product.count}
-                addProductToCart={() => handleAddProductToCart(product)}
-              />
-            );
-          })
-          <ClientProductGrid products={products} />
+          <ClientProductGrid
+            products={products}
+            handleAddProductToCart={handleAddProductToCart}
+          />
         )}
       </>
     );

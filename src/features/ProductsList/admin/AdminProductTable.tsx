@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC } from "react";
 import {
   Table,
   Thead,
@@ -34,17 +34,18 @@ const AdminProductTable: FC<AdminProductTableProps> = ({ products }) => {
             </Tr>
           </Thead>
           <Tbody>
-            {products.map(({ title, price, description, image }) => (
-              <Tr>
+            {products.map(({ id, title, price, description, imageUrl }) => (
+              <Tr key={`${id}${title}`}>
                 <Th>{title}</Th>
                 <Th>{description}</Th>
                 <Th>{price}</Th>
                 <Th>
                   <Image
-                    src={image.toString()}
+                    src={imageUrl}
                     borderRadius="full"
                     boxSize="50px"
                     objectFit="contain"
+                    alt={`${title}-image`}
                   />
                 </Th>
                 <Th>

@@ -5,19 +5,25 @@ import Product from "../../../models/Product";
 
 interface ClientProductGridProps {
   products: Product[];
+  handleAddProductToCart(product: Product): void;
 }
 
-const ClientProductGrid: FC<ClientProductGridProps> = ({ products }) => {
+const ClientProductGrid: FC<ClientProductGridProps> = ({
+  products,
+  handleAddProductToCart,
+}) => {
   return (
     <Box h="100%" width="100%" p={4}>
       <Grid templateColumns="repeat(4, 1fr)" w="100%" my={8} gap={8}>
-        {products.map(({ title, price, description, image }) => (
+        {products.map((product) => (
           <>
             <ProductCard
-              title={title}
-              price={price}
-              imageUrl={image.toString()}
-              description={description}
+              title={product.title}
+              price={product.price}
+              imageUrl={product.imageUrl}
+              description={product.description}
+              addProductToCart={() => handleAddProductToCart(product)}
+              stockCount={product.count}
             />
           </>
         ))}
