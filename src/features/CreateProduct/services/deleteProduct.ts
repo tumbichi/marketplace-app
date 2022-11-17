@@ -5,7 +5,6 @@ export const deleteProductService = async (productId: number) => {
     const res = await axios.delete(
       `${process.env.NEXT_PUBLIC_API_URL}/products/${productId}`
     );
-    console.log("res.data", res.data);
     return Promise.resolve(res.data);
   } catch (e) {
     return Promise.reject(e);

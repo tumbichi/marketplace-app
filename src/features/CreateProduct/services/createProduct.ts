@@ -24,7 +24,7 @@ export const createProductService = async ({
       title,
       description,
       price,
-      imageUrl: secure_url,
+      image: secure_url,
       categoryId,
       storeId,
     }

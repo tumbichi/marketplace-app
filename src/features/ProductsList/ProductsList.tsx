@@ -6,6 +6,9 @@ import { deleteProductService } from "../CreateProduct/services/deleteProduct";
 import useShoppingCart from "../ShoppingCart/hooks/useShoppingCart";
 import Product from "../../models/Product";
 
+import AdminProductTable from "./admin/AdminProductTable";
+import ClientProductGrid from "./client/ClientProductGrid";
+
 interface ProductListProps {
   isAdmin?: boolean;
 }
@@ -16,6 +19,8 @@ const ProductsList: FC<ProductListProps> = ({ isAdmin }) => {
     actions: { addProductToCart },
   } = useShoppingCart();
   const toast = useToast();
+
+  const [deleteLoading, setDeleteLoading] = useState(false);
   const [products, setProducts] = useState([]);
 
   const handleDeleteProduct = (productId: number) => {
@@ -36,7 +41,7 @@ const ProductsList: FC<ProductListProps> = ({ isAdmin }) => {
       })
       .catch(() => {
         toast({
-          title: `product cannot was deleted`,
+          title: `Product cannot be deleted`,
           status: "error",
           isClosable: true,
         });
@@ -57,11 +62,13 @@ const ProductsList: FC<ProductListProps> = ({ isAdmin }) => {
       });
   }, []);
 
-  return (
-    <Box h="100%" width="100%" p={4}>
-      <Grid templateColumns="repeat(4, 1fr)" w="100%" my={8} gap={8}>
-        {products.length === 0 ? (
-          <Text>{"There are not products :("}</Text>
+  if (!products) {
+    return <Text>No products :(</Text>;
+  } else {
+    return (
+      <>
+        {isAdmin ? (
+          <AdminProductTable products={products} />
         ) : (
           products.map((product: Product) => {
             return (
@@ -76,10 +83,11 @@ const ProductsList: FC<ProductListProps> = ({ isAdmin }) => {
               />
             );
           })
+          <ClientProductGrid products={products} />
         )}
-      </Grid>
-    </Box>
-  );
+      </>
+    );
+  }
 };
 
 export default ProductsList;
