@@ -6,13 +6,13 @@ export const createProductService = async ({
   title,
   description,
   price,
-  imageUrl,
+  image,
   categoryId,
   storeId,
 }: Product): Promise<Product> => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/image/upload`, {
     method: "POST",
-    body: imageUrl,
+    body: image,
   });
   const imageData: ImageData = await res.json();
 
@@ -24,7 +24,7 @@ export const createProductService = async ({
       title,
       description,
       price,
-      imageUrl: secure_url,
+      image: secure_url,
       categoryId,
       storeId,
     }
