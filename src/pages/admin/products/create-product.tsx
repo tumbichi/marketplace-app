@@ -4,7 +4,7 @@ import React from "react";
 
 const CreateProduct = dynamic(
   () => {
-    return import("../../../features/CreateProduct/CreateProduct");
+    return import("../../../Admin/Product/features/CreateProduct/CreateProduct");
   },
   { ssr: false }
 );
@@ -12,7 +12,7 @@ const CreateProduct = dynamic(
 const CreateProductProvider = dynamic(
   () => {
     return import(
-      "../../../features/CreateProduct/context/CreateProductProvider"
+      "../../../Admin/Product/features/CreateProduct/context/CreateProductProvider"
     );
   },
   { ssr: false }

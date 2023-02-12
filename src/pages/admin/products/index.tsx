@@ -1,8 +1,8 @@
 import React from "react";
-import { ProductsList } from "../../../features";
+import { ListProduct } from "Admin/Product/features";
 
 const AdminProductPage = () => {
-  return <ProductsList isAdmin />;
+  return <ListProduct />;
 };
 
 export default AdminProductPage;
